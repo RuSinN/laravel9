@@ -1,9 +1,9 @@
 @extends('dashboard.layout')
 @section('content')
 
-    <a href="{{route('category.create')}}">Crear Categoria</a>
+    <a class="btn btn-success my-3" href="{{route('category.create')}}">Crear Categoria</a>
 
-    <table>
+    <table class="table mb-3">
         <tr>
             <th>Titulo</th>
             <th>Slug</th>
@@ -15,12 +15,12 @@
                     <td>{{ $c->title }}</td>
                     <td>{{ $c->slug }}</td>
                     <td>
-                        <a href="{{route('category.edit',$c)}}">Editar</a> 
-                        <a href="{{route('category.show',$c)}}">Ver</a> 
-                        <form action="{{ route('category.destroy',$c) }}" method="post">
+                        <a class="btn btn-primary" href="{{route('category.edit',$c)}}">Editar</a> 
+                        <a class="btn btn-success" href="{{route('category.show',$c)}}">Ver</a> 
+                        <form class="inline-block" action="{{ route('category.destroy',$c) }}" method="post">
                             @method("DELETE")
                             @csrf
-                            <button type="submit">Eliminar</button>
+                            <button class="btn btn-danger" type="submit">Eliminar</button>
                         </form>
                     </td>
                 </tr>
