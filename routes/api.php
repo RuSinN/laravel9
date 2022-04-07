@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CategoryController;
- 
+use App\Http\Controllers\Api\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,7 +17,7 @@ use App\Http\Controllers\Api\CategoryController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -27,6 +28,11 @@ Route::get('post/all', [PostController::class, 'all']);
 Route::get('post/slug/{post:slug}', [PostController::class, 'slug']);
 Route::get('post/{category}/posts', [PostController::class, 'postByCategory']);
 
+Route::middleware(['auth:sanctum'])->group(function(){    
+    Route::resource('category', CategoryController::class)->except(["create","edit"]);
+    Route::resource('post', PostController::class)->except(["create","edit"]);    
+});
 
-Route::resource('category', CategoryController::class)->except(["create","edit"]);
-Route::resource('post', PostController::class)->except(["create","edit"]);
+//usuarios
+Route::post('user/login',[UserController::class, 'login'])->name('api.user.login');
+Route::get('user/logout',[UserController::class, 'logout'])->name('api.user.logout');;
